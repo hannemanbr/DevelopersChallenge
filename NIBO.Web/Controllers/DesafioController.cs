@@ -73,7 +73,7 @@ namespace NIBO.Web.Controllers
             desafioView.IdTime02 = Convert.ToInt32(equipe02);
 
             //validaçao
-            var listaValidacao = _desafioUtil.Validacao(desafioView, _context);
+            var listaValidacao = _desafioUtil.Validate(desafioView, _context);
 
             if (listaValidacao.Where(x => x.Resultado == false).Any())
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,41 +17,45 @@ namespace NIBO.Web.Controllers
 {
     public class JogosController : Controller
     {
-        private readonly TorneioContext _contexto;
+        private readonly TorneioContext _context;
         private DesafioInfra _desafioInfra = new DesafioInfra();
         private EquipeInfra _equipeInfra = new EquipeInfra();
         private EventoInfra _eventoInfra = new EventoInfra();
         private DesafioUtil _desafioUtil = new DesafioUtil();
         private EventoUtil _eventoUtil = new EventoUtil();
+        private JogosUtil _jogosUtil = new JogosUtil();
 
         public JogosController(TorneioContext contexto)
         {
-            _contexto = contexto;
+            _context = contexto;
         }
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(_desafioUtil.GetEventos(_contexto));
+            return View(_desafioUtil.GetEventos(_context));
         }
 
         public IActionResult Edit(int id){
 
-            var list = _desafioUtil.GetDesafiosById(id, _contexto);
-                               
-            ViewBag.Evento = list.Select(x => x.Nome).First().ToString();
-            ViewBag.Fase = list.Select(x => x.Fase).First().ToString();
-        
-            return View(list);
+            //var list = _desafioUtil.GetDesafiosById(id, _contexto);
+            var jogos = _jogosUtil.GetByEvento(id, _context);
+
+            if (jogos != null)
+            {
+                ViewBag.Evento = jogos.Desafios.Select(x => x.Nome).First().ToString();
+                ViewBag.Fase = jogos.Desafios.Select(x => x.Fase).First().ToString();
+            }
+
+            return View(jogos);
             
         }
 
         [HttpPost]
-        public IActionResult Edit(List<DesafioView> evento)
+        public IActionResult Edit(JogosView jogos, IEnumerable<DesafioView> desafios)
         {
-            var teste = evento;
-
-
+            var teste = desafios;
+            
             return View();
         }
     }

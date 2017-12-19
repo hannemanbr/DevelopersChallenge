@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NIBO.Web.ViewModels.DesafioView>
+﻿@model NIBO.Web.ViewModels.JogosView
 
 @{
     ViewData["Titulo"] = "Jogos";
@@ -22,7 +22,7 @@
     <br/>
      @using (Html.BeginForm())
    { 
-    @foreach (var item in Model) {
+    @foreach (var item in Model.Desafios) {
             <tr>
                 <td style="text-align: right">
                     @Html.DisplayFor(modelItem => item.equipe01.Nome, new { style="font-weight: bold" }): 
