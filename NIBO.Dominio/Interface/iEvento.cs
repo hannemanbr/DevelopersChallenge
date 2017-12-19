@@ -7,12 +7,12 @@ namespace NIBO.Dominio.Interface
 {
     public interface iEvento
     {
-        void Inserir(Evento evento, TorneioContext contexto);
-        void Atualizar(TorneioContext contexto, Evento evento);
-        void Excluir(TorneioContext contexto, Evento evento);
+        void Insert(Evento evento, TorneioContext context);
+        void Update(TorneioContext context, Evento evento);
+        void Delete(TorneioContext context, Evento evento);
 
-        Evento ConsultarPorId(TorneioContext contexto, int id);
-        List<Evento> ConsultarTodos(TorneioContext contexto);
+        Evento GetByID(TorneioContext context, int id);
+        List<Evento> GetAll(TorneioContext context);
 
     }
 }

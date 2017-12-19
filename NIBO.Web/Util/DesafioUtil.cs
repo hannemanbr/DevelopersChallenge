@@ -21,7 +21,7 @@ namespace NIBO.Web.Util
         {
 
             var lista = new List<EventoView>();
-            var listaEventos = _eventoInfra.ConsultarTodos(contexto);
+            var listaEventos = _eventoInfra.GetAll(contexto);
 
             if (idEvento > 0) listaEventos = listaEventos.Where(x => x.Id == idEvento).ToList();
 
@@ -44,7 +44,7 @@ namespace NIBO.Web.Util
 
             var lista = new List<DesafioView>();
 
-            foreach (Desafio desafio in _desafioInfra.ConsultarTodos(contexto))
+            foreach (Desafio desafio in _desafioInfra.GetAll(contexto))
             {
                 lista.Add(ConvertDesafioInDesafioView(desafio));
             }
@@ -54,10 +54,10 @@ namespace NIBO.Web.Util
 
         public List<EquipeView> GetEquipesByDesafio(TorneioContext contexto, int idDesafio)
         {
-            var listaEquipeSelecionadas = _desafioInfra.ConsultarEquipesPorDesafio(contexto, idDesafio);
+            var listaEquipeSelecionadas = _desafioInfra.GetEquipesByDesafio(contexto, idDesafio);
             var lista = new List<EquipeView>();
 
-            foreach (Equipe equipe in _equipeInfra.ConsultarTodos(contexto))
+            foreach (Equipe equipe in _equipeInfra.GetAll(contexto))
             {
                 if (!listaEquipeSelecionadas.Contains(equipe) || listaEquipeSelecionadas.Count() == 0)
                     lista.Add(
@@ -75,12 +75,12 @@ namespace NIBO.Web.Util
         public DesafioView GetById(int id, TorneioContext contexto)
         {
             var listDesafios = new List<DesafioView>();
-            var desafio = _desafioInfra.ConsultarPorId(contexto, id);
+            var desafio = _desafioInfra.GetByID(contexto, id);
             var desafioView = ConvertDesafioInDesafioView(desafio);
 
             //consulting equipes
-            Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
-            Equipe equipe2 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime02);
+            Equipe equipe1 = _equipeInfra.GetByID(contexto, desafioView.IdTime01);
+            Equipe equipe2 = _equipeInfra.GetByID(contexto, desafioView.IdTime02);
 
             // conversao para EquipeView
             desafioView.equipe01 = _equipeUtil.ConversaoEquipe(equipe1);
@@ -93,7 +93,7 @@ namespace NIBO.Web.Util
         public List<DesafioView> GetDesafiosById(int idEvento, TorneioContext contexto)
         {
 
-            var listDesafios = _desafioInfra.consultarDesafiosPorEvento(contexto, idEvento);
+            var listDesafios = _desafioInfra.GetDesafiosByEvento(contexto, idEvento);
             var listDesafiosView = new List<DesafioView>();
 
             foreach(Desafio desafio in listDesafios) {
@@ -101,8 +101,8 @@ namespace NIBO.Web.Util
                 var desafioView = ConvertDesafioInDesafioView(desafio);
 
                 //consulting equipe by Id
-                Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
-                Equipe equipe2 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime02);
+                Equipe equipe1 = _equipeInfra.GetByID(contexto, desafioView.IdTime01);
+                Equipe equipe2 = _equipeInfra.GetByID(contexto, desafioView.IdTime02);
 
                 // Convert equipe to EquipeView
                 desafioView.equipe01 = _equipeUtil.ConversaoEquipe(equipe1);
@@ -121,20 +121,20 @@ namespace NIBO.Web.Util
             var lista = new List<ResultadoValidacao>();
 
             if (desafio == null) {
-                lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = Mensagem.ErroDesafioEvento() });
+                lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = MessageUtil.ErrorDesafioEvento() });
                 return lista;
             } 
 
-            if (desafio.IdEvento == 0) lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = Mensagem.ErroDesafioEvento() });
+            if (desafio.IdEvento == 0) lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = MessageUtil.ErrorDesafioEvento() });
 
-            if (desafio.IdTime01==desafio.IdTime02) lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = Mensagem.ErroDesafioEquipeIdentica() });
+            if (desafio.IdTime01==desafio.IdTime02) lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = MessageUtil.ErrorDesafioEquipeIdentica() });
 
-            var listaEquipesDesafio = _desafioInfra.ConsultarEquipesPorDesafio(contexto, desafio.Id);
-            var Equipe01 = _equipeInfra.ConsultarPorId(contexto, desafio.IdTime01);
-            var Equipe02 = _equipeInfra.ConsultarPorId(contexto, desafio.IdTime02);
+            var listaEquipesDesafio = _desafioInfra.GetEquipesByDesafio(contexto, desafio.Id);
+            var Equipe01 = _equipeInfra.GetByID(contexto, desafio.IdTime01);
+            var Equipe02 = _equipeInfra.GetByID(contexto, desafio.IdTime02);
 
             if (listaEquipesDesafio.Contains(Equipe01) && listaEquipesDesafio.Contains(Equipe02))
-                lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = Mensagem.ErroDesafioEquipeExistente() });
+                lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = MessageUtil.ErrorDesafioEquipeExistente() });
             
             return lista;
         }

@@ -7,12 +7,12 @@ namespace NIBO.Dominio.Interface
 {
     public interface iEquipe
     {
-        void Inserir(Equipe equipe, TorneioContext contexto);
-        void Atualizar(TorneioContext contexto, Equipe equipe);
-        void Excluir(TorneioContext contexto, Equipe equipe);
+        void Insert(Equipe equipe, TorneioContext contexto);
+        void Update(TorneioContext contexto, Equipe equipe);
+        void Delete(TorneioContext contexto, Equipe equipe);
 
-        Equipe ConsultarPorId(TorneioContext contexto, int id);
-        List<Equipe> ConsultarTodos(TorneioContext contexto);
+        Equipe GetByID(TorneioContext contexto, int id);
+        List<Equipe> GetAll(TorneioContext contexto);
 
     }
 }

@@ -42,20 +42,20 @@ namespace NIBO.Web.Controllers
                 //conversao de obje
                 if (eventoView != null)
                 {
-                    _eventoInfra.Inserir(
+                    _eventoInfra.Insert(
                         _eventoUtil.ConversaoParaEvento(eventoView)
                         , _contexto
                     );
 
                 }
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View();
@@ -75,16 +75,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _eventoInfra.Atualizar(
+                _eventoInfra.Update(
                     _contexto, _eventoUtil.ConversaoParaEvento(eventoView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View();
@@ -102,16 +102,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _eventoInfra.Excluir(
+                _eventoInfra.Delete(
                     _contexto, _eventoUtil.ConversaoParaEvento(eventoView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View("Index", _eventoUtil.ConsultarEventos(_contexto));

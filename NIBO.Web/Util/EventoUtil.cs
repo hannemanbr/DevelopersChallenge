@@ -16,7 +16,7 @@ namespace NIBO.Web.Util
 
             var lista = new List<EventoView>();
 
-            foreach (Evento evento in _eventoInfra.ConsultarTodos(contexto))
+            foreach (Evento evento in _eventoInfra.GetAll(contexto))
             {
                 lista.Add(
                     new EventoView { Id = evento.Id, Nome = evento.Nome }
@@ -29,7 +29,7 @@ namespace NIBO.Web.Util
         public EventoView ConsultaPorId(int id, TorneioContext contexto)
         {
 
-            var evento = _eventoInfra.ConsultarPorId(contexto, id);
+            var evento = _eventoInfra.GetByID(contexto, id);
             var eventoView = new EventoView
             {
                 Id = evento.Id,
@@ -59,7 +59,7 @@ namespace NIBO.Web.Util
 
         public EventoView ConversaoParaEventoViewPorId(int id, TorneioContext _contexto)
         {
-            var evento = _eventoInfra.ConsultarPorId(_contexto, id);
+            var evento = _eventoInfra.GetByID(_contexto, id);
 
             var eventoView = new EventoView
             {

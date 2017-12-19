@@ -8,13 +8,13 @@ namespace NIBO.Dominio.Interface
 {
     public interface iDesafio
     {
-        void Inserir(Desafio desafio, TorneioContext contexto);
-        void Atualizar(TorneioContext contexto, Desafio desafio);
-        void Excluir(TorneioContext contexto, Desafio desafio);
+        void Insert(Desafio desafio, TorneioContext context);
+        void Update (TorneioContext context, Desafio desafio);
+        void Delete (TorneioContext context, Desafio desafio);
 
-        Desafio ConsultarPorId(TorneioContext contexto, int id);
-        List<Desafio> ConsultarTodos(TorneioContext contexto);
-        List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento);
-        List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento);
+        Desafio GetByID(TorneioContext context, int id);
+        List<Desafio> GetAll(TorneioContext context);
+        List<Equipe> GetEquipesByDesafio(TorneioContext context, int idEvento);
+        List<Desafio> GetDesafiosByEvento(TorneioContext context, int idEvento);
     }
 }

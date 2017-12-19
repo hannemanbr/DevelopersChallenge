@@ -15,7 +15,7 @@ namespace NIBO.Web.Util
 
             var lista = new List<EquipeView>();
 
-            foreach (Equipe equipe in _equipeInfra.ConsultarTodos(contexto))
+            foreach (Equipe equipe in _equipeInfra.GetAll(contexto))
             {
                 lista.Add(
                     new EquipeView { Id = equipe.Id, Nome = equipe.Nome }
@@ -28,7 +28,7 @@ namespace NIBO.Web.Util
         public EquipeView ConsultaPorId(int id, TorneioContext contexto)
         {
 
-            var equipe = _equipeInfra.ConsultarPorId(contexto, id);
+            var equipe = _equipeInfra.GetByID(contexto, id);
             var equipeView = new EquipeView
             {
                 Id = equipe.Id,

@@ -43,20 +43,20 @@ namespace NIBO.Web.Controllers
                 //conversao de obje
                 if (equipeView != null)
                 {
-                    _equipeInfra.Inserir(
+                    _equipeInfra.Insert(
                         _equipeUtil.ConversaoEquipeView(equipeView)
                         , _contexto
                     );
 
                 }
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View();
@@ -76,16 +76,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _equipeInfra.Atualizar(
+                _equipeInfra.Update(
                     _contexto, _equipeUtil.ConversaoEquipeView(equipeView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View();
@@ -103,16 +103,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _equipeInfra.Excluir(
+                _equipeInfra.Delete(
                     _contexto, _equipeUtil.ConversaoEquipeView(equipeView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View("Index", _equipeUtil.ConsultarEquipe(_contexto));

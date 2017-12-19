@@ -1,36 +1,36 @@
 ﻿using System;
 namespace NIBO.Dominio.Util
 {
-    public class Mensagem
+    public class MessageUtil
     {
-        public static string Sucesso(){
+        public static string Sucess(){
             return "Operação realizada com sucesso!";
         }
 
-        public static string Erro(){
+        public static string Error(){
 
             return "Ocorreu um erro durante a operaçao!";
         }
 
-        public static string ErroDesafioEvento()
+        public static string ErrorDesafioEvento()
         {
 
             return "Informe o evento!";
         }
 
-        public static string ErroDesafioEquipeIdentica()
+        public static string ErrorDesafioEquipeIdentica()
         {
 
             return "Não é possivel cadastrar Desafio com as mesmas equipes!";
         }
 
-        public static string ErroDesafioEquipeExistente()
+        public static string ErrorDesafioEquipeExistente()
         {
 
             return "A equipe selecionada já foi definida no desafio!";
         }
 
-        public static string ErroDesafioEquipeSelecionar()
+        public static string ErrorDesafioEquipeSelecionar()
         {
 
             return "Selecione as equipes!";

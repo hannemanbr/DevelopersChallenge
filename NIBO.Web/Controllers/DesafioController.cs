@@ -38,7 +38,7 @@ namespace NIBO.Web.Controllers
 
             if (listDesafiosView.Count() == 0)
             {
-                ViewBag.MsgRetornoDesafios = Mensagem.SemCadastroDesafios();
+                ViewBag.MsgRetornoDesafios = MessageUtil.SemCadastroDesafios();
             }
 
         }
@@ -63,7 +63,7 @@ namespace NIBO.Web.Controllers
             //validando
             if (equipe01 == null || equipe02 == null)
             {
-                ViewBag.MsgRetorno += Mensagem.ErroDesafioEquipeSelecionar();
+                ViewBag.MsgRetorno += MessageUtil.ErrorDesafioEquipeSelecionar();
                 return View(_eventoUtil.ConversaoParaEventoViewPorId(evento.Id, _context));
             }
 
@@ -89,20 +89,20 @@ namespace NIBO.Web.Controllers
                 {
                     if (desafioView != null)
                     {
-                        _desafioInfra.Inserir(
+                        _desafioInfra.Insert(
                             _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
                             , _context
                         );
 
                     }
 
-                    ViewBag.MsgRetorno = Mensagem.Sucesso();
+                    ViewBag.MsgRetorno = MessageUtil.Sucess();
 
 
                 }
                 catch (System.Exception ex)
                 {
-                    ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                    ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
                 }
             }
 
@@ -124,16 +124,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _desafioInfra.Atualizar(
+                _desafioInfra.Update(
                     _context, _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View();
@@ -151,16 +151,16 @@ namespace NIBO.Web.Controllers
 
             try
             {
-                _desafioInfra.Excluir(
+                _desafioInfra.Delete(
                     _context, _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
                 );
 
-                ViewBag.MsgRetorno = Mensagem.Sucesso();
+                ViewBag.MsgRetorno = MessageUtil.Sucess();
 
             }
             catch (System.Exception ex)
             {
-                ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
+                ViewBag.MsgRetorno = MessageUtil.Error() + " - " + ex.Message;
             }
 
             return View("Index", _desafioUtil.GetDesafios(_context));
