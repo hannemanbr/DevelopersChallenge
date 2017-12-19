@@ -13,23 +13,23 @@ namespace NIBO.Dominio.Infra
 
         public void Inserir(Desafio desafio, TorneioContext contexto)
         {
-            _desafioDAL.Inserir(desafio, contexto);
+            _desafioDAL.Insert(desafio, contexto);
         }
 
         public void Atualizar(TorneioContext contexto, Desafio desafio)
         {
-            _desafioDAL.Atualizar(contexto, desafio);
+            _desafioDAL.Update(contexto, desafio);
         }
 
         public Desafio ConsultarPorId(TorneioContext contexto, int id)
         {
-            return _desafioDAL.ConsultarPorId(contexto, id);
+            return _desafioDAL.GetByID(contexto, id);
         }
 
         public List<Desafio> ConsultarTodos(TorneioContext contexto)
         {
             var lista = new List<Desafio>();
-            lista = _desafioDAL.ConsultarTodos(contexto);
+            lista = _desafioDAL.GetAll(contexto);
 
             return lista;
         }
@@ -37,18 +37,18 @@ namespace NIBO.Dominio.Infra
         public void Excluir(TorneioContext contexto, Desafio desafio)
         {
             desafio.DELETED = 1;
-            _desafioDAL.Atualizar(contexto, desafio);
+            _desafioDAL.Update(contexto, desafio);
         }
 
         public List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento)
         {
-            return _desafioDAL.ConsultarEquipesPorDesafio(contexto, idEvento);
+            return _desafioDAL.GetEquipeByDesafio(contexto, idEvento);
 
         }
 
         public List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento)
         {
-            return _desafioDAL.consultarDesafiosPorEvento(contexto, idEvento);
+            return _desafioDAL.GetDesafiosByEvento(contexto, idEvento);
         }
     }
 }

@@ -7,33 +7,33 @@ namespace NIBO.DAL.Data
 {
     public class EquipeDAL
     {
-        public void Inserir(Equipe equipe, TorneioContext contexto)
+        public void Insert(Equipe equipe, TorneioContext context)
         {
             if (equipe != null)
             {
-                contexto.Equipes.Add(equipe);
-                contexto.SaveChanges();
+                context.Equipes.Add(equipe);
+                context.SaveChanges();
             }
         }
 
-        public List<Equipe> ConsultarTodos(TorneioContext contexto)
+        public List<Equipe> GetAll(TorneioContext context)
         {
             var lista = new List<Equipe>();
 
-            if (contexto.Equipes != null) lista = contexto.Equipes.Where(x => x.DELETED == 0).ToList();
+            if (context.Equipes != null) lista = context.Equipes.Where(x => x.DELETED == 0).ToList();
 
             return lista;
         }
 
-        public Equipe ConsultarPorId(TorneioContext contexto, int id)
+        public Equipe GetByID(TorneioContext context, int id)
         {
-            return contexto.Equipes.First(x => x.Id == id && x.DELETED==0);
+            return context.Equipes.First(x => x.Id == id && x.DELETED==0);
         }
 
-        public void Atualizar(TorneioContext contexto, Equipe equipe)
+        public void Update(TorneioContext context, Equipe equipe)
         {
-            contexto.Equipes.Update(equipe);
-            contexto.SaveChanges();
+            context.Equipes.Update(equipe);
+            context.SaveChanges();
         }
     }
 }

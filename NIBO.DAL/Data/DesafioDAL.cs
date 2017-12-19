@@ -7,39 +7,40 @@ namespace NIBO.DAL.Data
 {
     public class DesafioDAL
     {
-        public void Inserir(Desafio desafio, TorneioContext contexto)
+        public void Insert(Desafio desafio, TorneioContext context)
         {
             if (desafio != null)
             {
-                contexto.Desafios.Add(desafio);
-                contexto.SaveChanges();
+                context.Desafios.Add(desafio);
+                context.SaveChanges();
             }
         }
 
-        public List<Desafio> ConsultarTodos(TorneioContext contexto)
+        public List<Desafio> GetAll(TorneioContext context)
         {
             var lista = new List<Desafio>();
 
-            lista = contexto.Desafios.Where(x => x.DELETED ==0).ToList();
+            lista = context.Desafios.Where(x => x.DELETED ==0).ToList();
 
             return lista;
         }
 
-        public Desafio ConsultarPorId(TorneioContext contexto, int id)
+        public Desafio GetByID(TorneioContext context, int id)
         {
-            return contexto.Desafios.First(x => x.Id == id && x.DELETED==0);
+            return context.Desafios.First(x => x.Id == id && x.DELETED==0);
         }
 
-        public void Atualizar(TorneioContext contexto, Desafio desafio)
+        public void Update(TorneioContext context, Desafio desafio)
         {
-            contexto.Desafios.Update(desafio);
-            contexto.SaveChanges();
+            context.Desafios.Update(desafio);
+            context.SaveChanges();
         }
 
-        public List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento)
+        // Get all Teams by Challenger Id
+        public List<Equipe> GetEquipeByDesafio(TorneioContext context, int idEvento)
         {
-            var lista = from eq in contexto.Equipes
-                        join df in contexto.Desafios.Where(x => x.IdEvento == idEvento) on eq.Id equals df.IdEvento
+            var lista = from eq in context.Equipes
+                        join df in context.Desafios.Where(x => x.IdEvento == idEvento) on eq.Id equals df.IdEvento
                         select new Equipe
                         {
                             Nome = eq.Nome,
@@ -51,9 +52,10 @@ namespace NIBO.DAL.Data
             return lista.ToList();
         }
 
-        public List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento)
+        // Get Challenger Id Events 
+        public List<Desafio> GetDesafiosByEvento(TorneioContext context, int idEvento)
         {
-            return contexto.Desafios.Where(x => x.IdEvento == idEvento).ToList();
+            return context.Desafios.Where(x => x.IdEvento == idEvento).ToList();
         }
 
     }

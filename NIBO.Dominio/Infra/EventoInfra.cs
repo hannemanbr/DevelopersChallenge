@@ -12,7 +12,7 @@ namespace NIBO.Dominio.Infra
 
         public void Inserir(Evento evento, TorneioContext contexto)
         {
-            _eventoDAL.Inserir(evento, contexto);
+            _eventoDAL.Insert(evento, contexto);
         }
 
         public void Atualizar(TorneioContext contexto, Evento evento)
@@ -22,13 +22,13 @@ namespace NIBO.Dominio.Infra
 
         public Evento ConsultarPorId(TorneioContext contexto, int id)
         {
-            return _eventoDAL.ConsultarPorId(contexto, id);
+            return _eventoDAL.GetByID(contexto, id);
         }
 
         public List<Evento> ConsultarTodos(TorneioContext contexto)
         {
             var lista = new List<Evento>();
-            lista = _eventoDAL.ConsultarTodos(contexto);
+            lista = _eventoDAL.GetAll(contexto);
 
             return lista;
         }

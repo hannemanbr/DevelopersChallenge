@@ -8,32 +8,32 @@ namespace NIBO.DAL.Data
     public class EventoDAL
     {
 
-        public void Inserir(Evento evento, TorneioContext contexto)
+        public void Insert(Evento evento, TorneioContext context)
         {
             if (evento != null)
             {
-                contexto.Eventos.Add(evento);
-                contexto.SaveChanges();
+                context.Eventos.Add(evento);
+                context.SaveChanges();
             }
         }
 
-        public List<Evento> ConsultarTodos(TorneioContext contexto)
+        public List<Evento> GetAll(TorneioContext context)
         {
             var lista = new List<Evento>();
 
-            if (contexto.Eventos != null) lista = contexto.Eventos.Where(x => x.DELETED == 0).ToList();
+            if (context.Eventos != null) lista = context.Eventos.Where(x => x.DELETED == 0).ToList();
 
             return lista;
         }
 
-        public Evento ConsultarPorId(TorneioContext contexto, int id)
+        public Evento GetByID(TorneioContext context, int id)
         {
-            return contexto.Eventos.First(x => x.Id == id && x.DELETED==0);
+            return context.Eventos.First(x => x.Id == id && x.DELETED==0);
         }
 
-        public void Atualizar(TorneioContext contexto, Evento evento){
-            contexto.Eventos.Update(evento);
-            contexto.SaveChanges();
+        public void Atualizar(TorneioContext context, Evento evento){
+            context.Eventos.Update(evento);
+            context.SaveChanges();
         }
     }
 }
