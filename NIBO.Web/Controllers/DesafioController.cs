@@ -15,7 +15,7 @@ namespace NIBO.Web.Controllers
 {
     public class DesafioController : Controller
     {
-        private readonly TorneioContext _contexto;
+        private readonly TorneioContext _context;
         private DesafioInfra _desafioInfra = new DesafioInfra();
         private EquipeInfra _equipeInfra = new EquipeInfra();
         private EventoInfra _eventoInfra = new EventoInfra();
@@ -24,13 +24,13 @@ namespace NIBO.Web.Controllers
 
         public DesafioController(TorneioContext contexto)
         {
-            _contexto = contexto;
+            _context = contexto;
         }
 
         private void GerarViewBagListaEquipes(int id)
         {
-            var listEquipeView = _desafioUtil.ConsultarEquipesPorDesafio(_contexto, id);
-            var listDesafiosView = _desafioUtil.ConsultaDesafiosPorId(id, _contexto);
+            var listEquipeView = _desafioUtil.GetEquipesByDesafio(_context, id);
+            var listDesafiosView = _desafioUtil.GetDesafiosById(id, _context);
 
             ViewBag.equipe01 = new SelectList(listEquipeView, "Id", "Nome");
             ViewBag.equipe02 = new SelectList(listEquipeView, "Id", "Nome");
@@ -46,13 +46,13 @@ namespace NIBO.Web.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(_desafioUtil.ConsultarEventos(_contexto));
+            return View(_desafioUtil.GetEventos(_context));
         }
 
         public IActionResult Create(int id)
         {
             GerarViewBagListaEquipes(id);
-            return View(_eventoUtil.ConversaoParaEventoViewPorId(id, _contexto));
+            return View(_eventoUtil.ConversaoParaEventoViewPorId(id, _context));
         }
 
         [HttpPost]
@@ -64,7 +64,7 @@ namespace NIBO.Web.Controllers
             if (equipe01 == null || equipe02 == null)
             {
                 ViewBag.MsgRetorno += Mensagem.ErroDesafioEquipeSelecionar();
-                return View(_eventoUtil.ConversaoParaEventoViewPorId(evento.Id, _contexto));
+                return View(_eventoUtil.ConversaoParaEventoViewPorId(evento.Id, _context));
             }
 
             desafioView.IdEvento = evento.Id;
@@ -73,7 +73,7 @@ namespace NIBO.Web.Controllers
             desafioView.IdTime02 = Convert.ToInt32(equipe02);
 
             //validaçao
-            var listaValidacao = _desafioUtil.Validacao(desafioView, _contexto);
+            var listaValidacao = _desafioUtil.Validacao(desafioView, _context);
 
             if (listaValidacao.Where(x => x.Resultado == false).Any())
             {
@@ -90,8 +90,8 @@ namespace NIBO.Web.Controllers
                     if (desafioView != null)
                     {
                         _desafioInfra.Inserir(
-                            _desafioUtil.ConversaoDesafioView(desafioView)
-                            , _contexto
+                            _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
+                            , _context
                         );
 
                     }
@@ -107,14 +107,14 @@ namespace NIBO.Web.Controllers
             }
 
             GerarViewBagListaEquipes(evento.Id);
-            return View(_eventoUtil.ConversaoParaEventoViewPorId(evento.Id, _contexto));
+            return View(_eventoUtil.ConversaoParaEventoViewPorId(evento.Id, _context));
 
         }
 
         public IActionResult Edit(int id)
         {
 
-            return View(_desafioUtil.ConsultaPorId(id, _contexto));
+            return View(_desafioUtil.GetById(id, _context));
 
         }
 
@@ -125,7 +125,7 @@ namespace NIBO.Web.Controllers
             try
             {
                 _desafioInfra.Atualizar(
-                    _contexto, _desafioUtil.ConversaoDesafioView(desafioView)
+                    _context, _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
                 );
 
                 ViewBag.MsgRetorno = Mensagem.Sucesso();
@@ -142,7 +142,7 @@ namespace NIBO.Web.Controllers
 
         public IActionResult Delete(int id)
         {
-            return View(_desafioUtil.ConsultaPorId(id, _contexto));
+            return View(_desafioUtil.GetById(id, _context));
         }
 
         [HttpPost]
@@ -152,7 +152,7 @@ namespace NIBO.Web.Controllers
             try
             {
                 _desafioInfra.Excluir(
-                    _contexto, _desafioUtil.ConversaoDesafioView(desafioView)
+                    _context, _desafioUtil.ConvertDesafioViewInDesafio(desafioView)
                 );
 
                 ViewBag.MsgRetorno = Mensagem.Sucesso();
@@ -163,7 +163,7 @@ namespace NIBO.Web.Controllers
                 ViewBag.MsgRetorno = Mensagem.Erro() + " - " + ex.Message;
             }
 
-            return View("Index", _desafioUtil.ConsultarDesafio(_contexto));
+            return View("Index", _desafioUtil.GetDesafios(_context));
 
         }
     }

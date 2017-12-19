@@ -16,7 +16,8 @@ namespace NIBO.Web.Util
         private EventoInfra _eventoInfra = new EventoInfra();
         private EquipeUtil _equipeUtil = new EquipeUtil();
 
-        public List<EventoView> ConsultarEventos(TorneioContext contexto, int idEvento = 0)
+        //List al
+        public List<EventoView> GetEventos(TorneioContext contexto, int idEvento = 0)
         {
 
             var lista = new List<EventoView>();
@@ -38,27 +39,20 @@ namespace NIBO.Web.Util
             return lista;
         }
 
-        public List<DesafioView> ConsultarDesafio(TorneioContext contexto)
+        public List<DesafioView> GetDesafios(TorneioContext contexto)
         {
 
             var lista = new List<DesafioView>();
 
             foreach (Desafio desafio in _desafioInfra.ConsultarTodos(contexto))
             {
-                lista.Add(
-                    new DesafioView
-                    {
-                        Id = desafio.Id,
-                        //IdTime01 = ConsultarEquipes(contexto),
-                        //IdTime02 = ConsultarEquipes(contexto)
-                    }
-                );
+                lista.Add(ConvertDesafioInDesafioView(desafio));
             }
 
             return lista;
         }
 
-        public List<EquipeView> ConsultarEquipesPorDesafio(TorneioContext contexto, int idDesafio)
+        public List<EquipeView> GetEquipesByDesafio(TorneioContext contexto, int idDesafio)
         {
             var listaEquipeSelecionadas = _desafioInfra.ConsultarEquipesPorDesafio(contexto, idDesafio);
             var lista = new List<EquipeView>();
@@ -78,24 +72,13 @@ namespace NIBO.Web.Util
             return lista;
         }
 
-        public List<DesafioView> ConsultaPorId(int id, TorneioContext contexto)
+        public DesafioView GetById(int id, TorneioContext contexto)
         {
             var listDesafios = new List<DesafioView>();
             var desafio = _desafioInfra.ConsultarPorId(contexto, id);
-
-            var desafioView = new DesafioView
-            {
-                Id = desafio.Id,
-                IdTime01 = desafio.IdTime01,
-                IdTime02 = desafio.IdTime02,
-                PlacarTime01 = desafio.PlacarTime01,
-                PlacarTime02 = desafio.PlacarTime02,
-                IdEvento = desafio.IdEvento,
-                Nome = desafio.Nome
-            };
+            var desafioView = ConvertDesafioInDesafioView(desafio);
 
             //consulting equipes
-
             Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
             Equipe equipe2 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime02);
 
@@ -103,28 +86,19 @@ namespace NIBO.Web.Util
             desafioView.equipe01 = _equipeUtil.ConversaoEquipe(equipe1);
             desafioView.equipe02 = _equipeUtil.ConversaoEquipe(equipe2);
 
-            return listDesafios;
+            return desafioView;
 
         }
 
-        public List<DesafioView> ConsultaDesafiosPorId(int idEvento, TorneioContext contexto)
+        public List<DesafioView> GetDesafiosById(int idEvento, TorneioContext contexto)
         {
 
             var listDesafios = _desafioInfra.consultarDesafiosPorEvento(contexto, idEvento);
             var listDesafiosView = new List<DesafioView>();
 
             foreach(Desafio desafio in listDesafios) {
-
-                var desafioView = new DesafioView
-                {
-                    Id = desafio.Id,
-                    IdTime01 = desafio.IdTime01,
-                    IdTime02 = desafio.IdTime02,
-                    PlacarTime01 = desafio.PlacarTime01,
-                    PlacarTime02 = desafio.PlacarTime02,
-                    IdEvento = desafio.IdEvento,
-                    Nome = desafio.Nome
-                };
+                
+                var desafioView = ConvertDesafioInDesafioView(desafio);
 
                 //consulting equipe by Id
                 Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
@@ -139,29 +113,6 @@ namespace NIBO.Web.Util
             }
 
             return listDesafiosView;
-
-        }
-
-        public Desafio ConversaoDesafioView(DesafioView desafioView)
-        {
-
-            int IdView = 0;
-
-            if (desafioView.Id > 0) IdView = desafioView.Id;
-
-            var desafio = new Desafio
-            {
-                Id = IdView,
-                Nome=desafioView.Nome,
-                IdEvento = desafioView.IdEvento,
-                DELETED=0,
-                IdTime01=desafioView.IdTime01,
-                IdTime02=desafioView.IdTime02,
-                PlacarTime01=0,
-                PlacarTime02=0
-            };
-
-            return desafio;
 
         }
 
@@ -186,6 +137,51 @@ namespace NIBO.Web.Util
                 lista.Add(new ResultadoValidacao { Resultado = false, Mensagem = Mensagem.ErroDesafioEquipeExistente() });
             
             return lista;
+        }
+
+        public DesafioView ConvertDesafioInDesafioView(Desafio desafio)
+        {
+
+            int IdView = 0;
+
+            if (desafio.Id > 0) IdView = desafio.Id;
+
+            var desafioView = new DesafioView
+            {
+                Id = IdView,
+                Nome = desafio.Nome,
+                IdEvento = desafio.IdEvento,
+                IdTime01 = desafio.IdTime01,
+                IdTime02 = desafio.IdTime02,
+                PlacarTime01 = desafio.PlacarTime01,
+                PlacarTime02 = desafio.PlacarTime02
+            };
+
+            return desafioView;
+
+        }
+
+        public Desafio ConvertDesafioViewInDesafio(DesafioView desafioView)
+        {
+
+            int Id = 0;
+
+            if (desafioView.Id > 0) Id = desafioView.Id;
+
+            var desafio = new Desafio
+            {
+                Id = Id,
+                Nome = desafioView.Nome,
+                IdEvento = desafioView.IdEvento,
+                DELETED = 0,
+                IdTime01 = desafioView.IdTime01,
+                IdTime02 = desafioView.IdTime02,
+                PlacarTime01 = desafioView.PlacarTime01,
+                PlacarTime02 = desafioView.PlacarTime02
+            };
+
+            return desafio;
+
         }
     }
 }

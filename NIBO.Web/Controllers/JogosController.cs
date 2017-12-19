@@ -31,12 +31,12 @@ namespace NIBO.Web.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return View(_desafioUtil.ConsultarEventos(_contexto));
+            return View(_desafioUtil.GetEventos(_contexto));
         }
 
         public IActionResult Edit(int id){
 
-            var list = _desafioUtil.ConsultaDesafiosPorId(id, _contexto);
+            var list = _desafioUtil.GetDesafiosById(id, _contexto);
                                
             ViewBag.Evento = list.Select(x => x.Nome).First().ToString();
             ViewBag.Fase = list.Select(x => x.Fase).First().ToString();
