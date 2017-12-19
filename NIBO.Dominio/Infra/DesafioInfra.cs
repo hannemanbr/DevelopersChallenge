@@ -39,5 +39,16 @@ namespace NIBO.Dominio.Infra
             desafio.DELETED = 1;
             _desafioDAL.Atualizar(contexto, desafio);
         }
+
+        public List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento)
+        {
+            return _desafioDAL.ConsultarEquipesPorDesafio(contexto, idEvento);
+
+        }
+
+        public List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento)
+        {
+            return _desafioDAL.consultarDesafiosPorEvento(contexto, idEvento);
+        }
     }
 }

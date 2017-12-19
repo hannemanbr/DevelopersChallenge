@@ -14,5 +14,7 @@ namespace NIBO.Dominio.Interface
 
         Desafio ConsultarPorId(TorneioContext contexto, int id);
         List<Desafio> ConsultarTodos(TorneioContext contexto);
+        List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento);
+        List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento);
     }
 }

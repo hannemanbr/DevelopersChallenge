@@ -20,7 +20,7 @@ namespace NIBO.DAL.Data
         {
             var lista = new List<Desafio>();
 
-            if (contexto.Desafios != null) lista = contexto.Desafios.Where(x => x.DELETED ==0).ToList();
+            lista = contexto.Desafios.Where(x => x.DELETED ==0).ToList();
 
             return lista;
         }
@@ -34,6 +34,26 @@ namespace NIBO.DAL.Data
         {
             contexto.Desafios.Update(desafio);
             contexto.SaveChanges();
+        }
+
+        public List<Equipe> ConsultarEquipesPorDesafio(TorneioContext contexto, int idEvento)
+        {
+            var lista = from eq in contexto.Equipes
+                        join df in contexto.Desafios.Where(x => x.IdEvento == idEvento) on eq.Id equals df.IdEvento
+                        select new Equipe
+                        {
+                            Nome = eq.Nome,
+                            Id = eq.Id,
+                            DELETED = 0
+                        };
+
+
+            return lista.ToList();
+        }
+
+        public List<Desafio> consultarDesafiosPorEvento(TorneioContext contexto, int idEvento)
+        {
+            return contexto.Desafios.Where(x => x.IdEvento == idEvento).ToList();
         }
 
     }
