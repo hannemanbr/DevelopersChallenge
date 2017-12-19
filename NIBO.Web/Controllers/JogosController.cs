@@ -37,8 +37,17 @@ namespace NIBO.Web.Controllers
         }
 
         public IActionResult Edit(int id){
+            return View(GetListGames(id));
+        }
 
-            //var list = _desafioUtil.GetDesafiosById(id, _contexto);
+        [HttpPost]
+        public IActionResult Edit(int id, JogosView jogos)
+        {
+            return View(GetListGames(id));
+        }
+
+        private JogosView GetListGames(int id)
+        {
             var jogos = _jogosUtil.GetByEvento(id, _context);
 
             if (jogos != null)
@@ -47,16 +56,7 @@ namespace NIBO.Web.Controllers
                 ViewBag.Fase = jogos.Desafios.Select(x => x.Fase).First().ToString();
             }
 
-            return View(jogos);
-            
-        }
-
-        [HttpPost]
-        public IActionResult Edit(JogosView jogos, IEnumerable<DesafioView> desafios)
-        {
-            var teste = desafios;
-            
-            return View();
+            return jogos;
         }
     }
 }

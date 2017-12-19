@@ -14,7 +14,7 @@ namespace NIBO.Web.ViewModels
         //public Equipe equipe01 { get; set; }
         //public Equipe equipe02 { get; set; }
 
-        public IEnumerable<DesafioView> Desafios { get; set; }
+        public IList<DesafioView> Desafios { get; set; }
 
     }
 }

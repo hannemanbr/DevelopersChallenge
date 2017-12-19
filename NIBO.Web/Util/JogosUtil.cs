@@ -11,7 +11,8 @@ namespace NIBO.Web.Util
 
         public JogosView GetByEvento(int idEvento, TorneioContext context)
         {
-            return new JogosView { Desafios = _desafioUtil.GetDesafiosById(idEvento, context) };
+            var list = _desafioUtil.GetDesafiosById(idEvento, context);
+            return new JogosView { Desafios =  list};
         }
     }
 }

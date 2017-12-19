@@ -21,23 +21,23 @@
     </h3>
     <br/>
      @using (Html.BeginForm())
-   { 
-    @foreach (var item in Model.Desafios) {
-            <tr>
-                <td style="text-align: right">
-                    @Html.DisplayFor(modelItem => item.equipe01.Nome, new { style="font-weight: bold" }): 
-                    @Html.TextBoxFor(modelItem => item.PlacarTime01, new { style="width:30px;" })                                         
-                </td>
-                <td style="text-align: center"> vs.</td>
-                <td style="text-align: left">
-                    @Html.DisplayFor(modelItem => item.equipe02.Nome, new { style="font-weight: bold" }): 
-                    @Html.TextBoxFor(modelItem => item.PlacarTime02, new { style="width:30px;" })
-                </td>
-            </tr>
-    }
-        <br>
-        <input type="submit" value="Atualizar" />
-   }
+       { 
+            foreach(var item in model.Desafios) {
+                    <tr>
+                        <td style="text-align: right">
+                            @Html.DisplayFor(Model => item.equipe01.Nome, new { style="font-weight: bold" }): 
+                            @Html.TextBoxFor(Model => item.PlacarTime01, new { style="width:30px;" })                                         
+                        </td>
+                        <td style="text-align: center"> vs.</td>
+                        <td style="text-align: left">
+                            @Html.DisplayFor(Model => item.equipe02.Nome, new { style="font-weight: bold" }): 
+                            @Html.TextBoxFor(Model => item.PlacarTime02, new { style="width:30px;" })
+                        </td>
+                    </tr>
+            }   
+            <br>
+            <input type="submit" value="Atualizar" />
+       }
     </tbody>
 </table>
 
