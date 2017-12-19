@@ -1,0 +1,30 @@
+﻿@model IEnumerable<NIBO.Web.ViewModels.EventoView>
+
+@{
+    ViewData["Titulo"] = "Jogos";
+}
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                </th>
+               
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    Selecione o Desafio para atualizar o placar
+    <br/>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Selecionar equipes</a>
+                </td>
+            </tr>
+    }
+    </tbody>
+</table>
+

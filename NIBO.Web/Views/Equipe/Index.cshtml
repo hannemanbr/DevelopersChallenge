@@ -1,0 +1,33 @@
+﻿@model IEnumerable<NIBO.Web.ViewModels.EquipeView>
+
+@{
+    ViewData["Titulo"] = "Equipes";
+}
+<h2>Cadastro de Equipes</h2>
+
+<a asp-action="Create">Novo</a>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+Nome                </th>
+               
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

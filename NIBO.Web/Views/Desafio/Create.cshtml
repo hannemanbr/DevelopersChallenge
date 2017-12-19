@@ -1,0 +1,40 @@
+﻿@model NIBO.Web.ViewModels.EventoView
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Titulo"] = "Desafios";
+}    
+    @using (Html.BeginForm())
+   {
+        <fieldset>
+        <ol>
+        <li>
+           Selecione o Desafio @Html.TextBoxFor(m=>m.Nome, new { style="width:400px;" })
+        </li>
+        <li>
+           Informe o primeiro Time @Html.DropDownList("equipe01",String.Empty)
+        </li>
+        <li>
+            Informe o segundo Time @Html.DropDownList("equipe02",String.Empty)
+        </li>
+        </ol>
+        <br/>
+        @ViewBag.MsgRetorno         
+        <p>
+        <input type="submit" value="Inserir" />
+        &nbsp;
+        &nbsp;
+        <a asp-action="Index">Voltar</a>
+        </p>
+        <br/>
+        <h4>Desafios cadastrados</h4>
+        @ViewBag.MsgRetornoDesafios 
+        @foreach (var desafios in ViewBag.DesafiosCadastrados) {
+            <li>
+                <strong>@desafios.equipe01.Nome</strong> Vs. <strong>@desafios.equipe02.Nome</strong>
+            </li>
+        }
+        </fieldset>
+      
+  }

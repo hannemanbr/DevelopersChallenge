@@ -1,0 +1,31 @@
+﻿@model NIBO.Web.ViewModels.EquipeView
+
+@{
+    ViewData["Titulo"] = "Equipes";
+}
+<h2>Editar Evento</h2>
+    
+    @using (Html.BeginForm())
+   {       
+        @Html.ValidationSummary()
+        <fieldset>
+        <ol>
+        <li>
+        @Html.LabelFor(m=>m.Nome)
+        @Html.TextBoxFor(m=>m.Nome)
+        </li>
+        </ol>
+        <br/>
+        @ViewBag.MsgRetorno
+        <br/>
+        <br/>
+        <p>
+        <input type="submit" value="Excluir" />
+        &nbsp;
+        &nbsp;
+        <a asp-action="Index">Voltar</a>
+        </p>
+        @ViewBag.MsgRetorno;
+        </fieldset>
+      
+  }
