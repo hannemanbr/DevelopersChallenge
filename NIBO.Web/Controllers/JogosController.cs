@@ -48,7 +48,7 @@ namespace NIBO.Web.Controllers
         [HttpPost]
         public IActionResult Edit(List<DesafioView> evento)
         {
-            var texte = evento;
+            var teste = evento;
 
 
             return View();

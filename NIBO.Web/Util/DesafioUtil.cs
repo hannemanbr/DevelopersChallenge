@@ -94,7 +94,7 @@ namespace NIBO.Web.Util
                 Nome = desafio.Nome
             };
 
-            //consultando objeto equipes
+            //consulting equipes
 
             Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
             Equipe equipe2 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime02);
@@ -126,12 +126,11 @@ namespace NIBO.Web.Util
                     Nome = desafio.Nome
                 };
 
-                //consultando objeto equipes
-
+                //consulting equipe by Id
                 Equipe equipe1 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime01);
                 Equipe equipe2 = _equipeInfra.ConsultarPorId(contexto, desafioView.IdTime02);
 
-                // conversao para EquipeView
+                // Convert equipe to EquipeView
                 desafioView.equipe01 = _equipeUtil.ConversaoEquipe(equipe1);
                 desafioView.equipe02 = _equipeUtil.ConversaoEquipe(equipe2);
 
